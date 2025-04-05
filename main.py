@@ -28,7 +28,9 @@ def main():
                     continue
 
                 r_pos = base_word.rfind(r_word[-1])
-                if r_pos == -1 or r_pos == pos:
+                if r_pos < pos:
+                    continue
+                if r_pos == -1 or r_pos == pos or r_pos == pos + 1:
                     continue
 
                 ps.append({
@@ -48,7 +50,10 @@ def main():
         # [***l_ldx(len)r_ldx***]
         for f, s in zip(ps[idx]["l_word"], ps[idx]["r_word"]):
             print(f, s)
-            pattern = f".{f}.{x}{s}"
+            pattern = f"{f}"
+            for cnt in range(x):
+                pattern += "."
+            pattern += f"{s}"
             for i, word in enumerate(words):
                 if i in [ps[idx]["base_word_id"], ps[idx]["l_word_id"], ps[idx]["r_word_id"]]:
                     continue
