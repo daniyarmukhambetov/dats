@@ -12,7 +12,7 @@ def main():
         print(i, word)
 
     ps = []
-    iters_count = 1
+    iters_count = 10
     for base_idx, base_word in enumerate(words):
         if base_idx == iters_count:
             break
@@ -42,19 +42,20 @@ def main():
                     "r_base_intersection": r_pos,
                 })
     idx = 123
-    print(ps[idx])
-    x = ps[idx]["r_base_intersection"] - ps[idx]["l_base_intersection"] - 1
-    # [***l_ldx(len)r_ldx***]
-    for f, s in zip(ps[idx]["l_word"], ps[idx]["r_word"]):
-        print(f, s)
-        pattern = f".{f}.{x}{s}"
-        for i, word in enumerate(words):
-            if i in [ps[idx]["base_word_id"], ps[idx]["l_word_id"], ps[idx]["r_word_id"]]:
-                continue
-            if regex.search(pattern, word) is not None:
-                print(word, "###")
-# т
-# в
+    for idx in range(len(ps)):
+        print(ps[idx])
+        x = ps[idx]["r_base_intersection"] - ps[idx]["l_base_intersection"] - 1
+        # [***l_ldx(len)r_ldx***]
+        for f, s in zip(ps[idx]["l_word"], ps[idx]["r_word"]):
+            print(f, s)
+            pattern = f".{f}.{x}{s}"
+            for i, word in enumerate(words):
+                if i in [ps[idx]["base_word_id"], ps[idx]["l_word_id"], ps[idx]["r_word_id"]]:
+                    continue
+                if regex.search(pattern, word) is not None:
+                    print(word, "###")
+                    return
+
 # о           р
 # р           о
 # ч           в
@@ -63,6 +64,8 @@ def main():
 # т           н
 # в           и
 # о м е ж н и к
+# 0
+
 
 if __name__ == '__main__':
     main()
